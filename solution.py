@@ -11,8 +11,8 @@ def solution(p: float, x: np.array) -> tuple:
     # Это будет вашим решением
     # Не меняйте название функции и её аргументы
     n = len(x)
-    mean = np.mean(x)
-    std_error = np.std(x, ddof=1) / np.sqrt(n)
-    t_value = t.ppf(1 - p / 2, n - 1)
-    half_width = t_value * std_error
-    return (mean - half_width, mean + half_width)
+    a = 0.005
+    alpha = 1 - p
+    lower_bound = uniform.ppf(alpha / 2, loc=a, scale=(np.max(x) - a) / n)
+    upper_bound = uniform.ppf(1 - alpha / 2, loc=a, scale=(np.max(x) - a) / n)
+    return (lower_bound, upper_bound)
